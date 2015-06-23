@@ -75,6 +75,14 @@ function replaceRawArrBindings(raw) {
   var index            = 0;
   var bindings         = []
   
+  if (client.config.client === 'pg' && expectedBindings === 0) {
+    return {
+      method: 'raw',
+      sql: raw.sql.replace(/\?\??/g, '$Q'),
+      bindings: bindings
+    };
+  }
+  
   var sql = raw.sql.replace(/\?\??/g, function(match) {
     var value = values[index++]
     

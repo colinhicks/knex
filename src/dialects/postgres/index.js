@@ -99,7 +99,7 @@ assign(Client_PG.prototype, {
     return sql.replace(/\?/g, function() {
       questionCount++;
       return '$' + questionCount;
-    });
+    }).replace(/\$Q/g, '?');
   },
 
   _stream: function(connection, obj, stream, options) {
